@@ -23,18 +23,6 @@ namespace Authorization
         public AuthWindow()
         {
             InitializeComponent();
-
-            DoubleAnimation btnAnimation = new DoubleAnimation();
-            btnAnimation.From = 0;
-            btnAnimation.To = 450;
-            btnAnimation.Duration = TimeSpan.FromSeconds(2);
-            continueBut.BeginAnimation(Button.WidthProperty, btnAnimation);
-
-            DoubleAnimation signbtnAnim = new DoubleAnimation();
-            signbtnAnim.From = 0;
-            signbtnAnim.To = 100;
-            signbtnAnim.Duration = TimeSpan.FromSeconds(2);
-            signupBut.BeginAnimation(Button.WidthProperty, signbtnAnim);
         }
 
         private void Loginin(object sender, RoutedEventArgs e)
@@ -57,9 +45,10 @@ namespace Authorization
                     authUser = db.Users.Where(user => user.Login == login && user.Password == password).FirstOrDefault();
                 }
                 
-                if (authUser != null)
+                if (authUser != null && authUser.Password == password)
                 {
-                    MessageBox.Show("Welcome!");
+                    FormMessageReg customMessageBox = new FormMessageReg();
+                    customMessageBox.ShowCustomMessage("Welcome!");
                     UserPageWindow userPageWindow = new UserPageWindow();
                     userPageWindow.Show();
                     Hide();
@@ -67,7 +56,8 @@ namespace Authorization
                 }
                 else
                 {
-                    MessageBox.Show("This user does not exist!");
+                    FormMessageErr messageErr = new FormMessageErr();
+                    messageErr.ShowErrMessage("Incorrect login or password!");
                     log.Foreground = Brushes.DarkRed;
                     pass.Foreground = Brushes.DarkRed;
                 }

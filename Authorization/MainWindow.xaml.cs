@@ -29,32 +29,7 @@ namespace Authorization
         {
             InitializeComponent();
             db = new AppContext();
-
-            DoubleAnimation btnAnimation = new DoubleAnimation();
-            btnAnimation.From = 0;
-            btnAnimation.To = 450;
-            btnAnimation.Duration = TimeSpan.FromSeconds(2);
-            continueBut.BeginAnimation(Button.WidthProperty, btnAnimation);
-
-            DoubleAnimation signbtnAnim = new DoubleAnimation();
-            signbtnAnim.From = 0;
-            signbtnAnim.To = 100;
-            signbtnAnim.Duration = TimeSpan.FromSeconds(2);
-            SignUpBut.BeginAnimation(Button.WidthProperty, signbtnAnim);
-            Loaded += MainWindow_Loaded;
-        }
-
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            DoubleAnimation animation = new DoubleAnimation
-            {
-                From = -MainGrid.ActualWidth, // Начальная позиция за пределами контейнера
-                To = 0, // Конечная позиция (0 - начальное положение)
-                Duration = TimeSpan.FromSeconds(3)
-            };
-
-            MainGrid.BeginAnimation(Canvas.LeftProperty, animation);
-        }
+        }  
         private void Continue(object sender, RoutedEventArgs e)
         {
             string login = log.Text.Trim();
@@ -97,7 +72,8 @@ namespace Authorization
                 passConf.ToolTip = "";
                 passConf.Foreground = Brushes.DarkGreen;
 
-                MessageBox.Show("You are now registered!");
+                FormMessageReg customMessageBox = new FormMessageReg();
+                customMessageBox.ShowCustomMessage("You're registred now!");
                 AuthWindow authWindow = new AuthWindow();
                 authWindow.Show();
                 Hide();
